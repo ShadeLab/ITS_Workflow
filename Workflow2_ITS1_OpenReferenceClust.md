@@ -237,7 +237,7 @@ filter_alignment.py -i OTUS_aligned.fasta -o OTUS_filtered_alignment
 ```
 make_phylogeny.py -i OTUS_filtered_alignment/OTUS_aligned_pfiltered.fasta -o OTUS_rep_set.tre
 ```
-## Rarefy OTU table to lowest sequencing depth
+## RAREFY OTU TABLE TO LOWEST SEQUENCING DEPTH
 ```
 # summarize OTU table
 biom summarize-table -i OPEN_REF_OTU_TABLE_ITS.biom -o OTU_table_sum.txt

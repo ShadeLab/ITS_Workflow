@@ -112,13 +112,13 @@ fastq_quality_filter -q 30 -i cut_merged.fastq -o filtered_cut_merged.fq -p 50
 
 #output: 4372031 seqs, 877374 uniques, 645307 singletons (73.5%)
 ```
-## Remove Singeltons
+## REMOVE SINGLETONS
 ```
 /mnt/research/rdp/public/thirdParty/usearch10.0.240_i86linux64 -sortbysize derep_filtered_cut_merged.fasta -fastaout nosigs_derep_filtered_cut_merged.fasta -minsize 2
 
 #output: Sorting 232067 sequences
 ```
-## Precluster Sequences
+## PRECLUSTER SEQUENCES
 ```
 /mnt/research/rdp/public/thirdParty/usearch10.0.240_i86linux64 -cluster_fast nosigs_derep_filtered_cut_merged.fasta -centroids denoised_nosigs_derep_filtered_cut_merged.fasta -id 0.9 -maxdiffs 5 -abskew 10 -sizein -sizeout -sort size
 
@@ -129,11 +129,11 @@ fastq_quality_filter -q 30 -i cut_merged.fastq -o filtered_cut_merged.fq -p 50
   Min size  2
 Singletons  0, 0.0% of seqs, 0.0% of clusters
 ```
-## Reference-based OTU picking against UNITE fungal ITS database (v. 7.2) at 97% sequence similarity
+## CLOSED REFERENCE OTU PICKING TO  UNITE FUNGAL ITS DATABASE (v. 7.2) AT 97% SEQUENCE SIMILARITY
 ```
  /mnt/research/rdp/public/thirdParty/usearch10.0.240_i86linux64 -usearch_global denoised_nosigs_derep_filtered_cut_merged.fasta -id 0.97 -db /mnt/research/ShadeLab/UNITE_v7.2/sh_refs_qiime_ver7_97_s_01.12.2017.fasta -strand plus -uc ref_seqs.uc -dbmatched UNITE_reference.fasta -notmatched UNITE_failed_reference.fq
 ```
-## Sort by size and then de novo OTU picking on sequences that failed to hit UNITE
+## SORT BY SIZE AND THEN DE NOVO OTU PICKING ON SEQUENCE THAT FAILED TO HIT UNITE
 ```
 /mnt/research/rdp/public/thirdParty/usearch10.0.240_i86linux64  -sortbysize UNITE_failed_reference.fq -fastaout sorted_UNITE_failed_reference.fq
 
@@ -141,15 +141,15 @@ Singletons  0, 0.0% of seqs, 0.0% of clusters
 
 #output: 2740 OTUs, 515 chimeras
 ```
-## Combine the rep sets between de novo and reference-based OTU picking
+## COMBINE REP.SET FASTA FILES FROM CLOSED REFERENCE AND DE NOVO OTU PICKING
 ```
 cat UNITE_reference.fasta denovo_otus.fasta > FULL_REP_SET.fna
 
 /mnt/home/bintarti/python_scripts-master/fasta_number.py FULL_REP_SET.fna OTU_ > NUMBERED_FULL_REP_SET.fasta
 ```
-## Map rep_set back to pre-dereplicated sequences and make OTU tables
+## MAP "NUMBERED_FULL_REP_SET.fasta" FILE BACK TO PRE-DEREPLICATED SEQUENCES AND MAKE OTU TABLE
 ```
-/mnt/research/rdp/public/thirdParty/usearch10.0.240_i86linux64 -usearch_global mergedfastq/merged.fq -db NUMBERED_FULL_REP_SET.fasta  -strand plus -id 0.97 -uc OTU_map.uc -otutabout OPEN_REF_OTU_TABLE_ITS.txt
+/mnt/research/rdp/public/thirdParty/usearch10.0.240_i86linux64 -usearch_gloal mergedfastq/merged.fq -db NUMBERED_FULL_REP_SET.fasta  -strand plus -id 0.97 -uc OTU_map.uc -otutabout OPEN_REF_OTU_TABLE_ITS.txt
 
 #output: 4101281 / 4373305 mapped to OTUs (93.8%)
 #count OTUs
@@ -205,7 +205,7 @@ filter_alignment.py -i OTUS_aligned.fasta -o OTUS_filtered_alignment
 ```
 make_phylogeny.py -i OTUS_filtered_alignment/OTUS_aligned_pfiltered.fasta -o OTUS_rep_set.tre
 ```
-## Rarefy OTU table to lowest sequencing depth
+## RAREFY OTU TABLE TO LOWEST SEQUENCING DEPTH
 ```
 # summarize OTU table
 biom summarize-table -i OPEN_REF_OTU_TABLE_ITS.biom -o OTU_table_sum.txt
