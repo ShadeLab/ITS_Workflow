@@ -237,7 +237,7 @@ make_phylogeny.py -i OTUS_filtered_alignment/OTUS_aligned_pfiltered.fasta -o OTU
 
 make_phylogeny.py -i ZOTUS_filtered_alignment/ZOTUS_aligned_pfiltered.fasta -o ZOTUS_rep_set.tre
 ```
-## Rarefy OTU table to lowest sequencing depth
+## RAREFY OTU TABLE TO LOWEST SEQUENCING DEPTH
 ```
 # summarize OTU and ZOTU table
 
