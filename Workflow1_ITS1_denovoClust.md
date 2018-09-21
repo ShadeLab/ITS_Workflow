@@ -39,14 +39,14 @@ cat ../rawreads/*R1_001.fastq > raw_reads_R1.fastq; cat ../rawreads/*R2_001.fast
 /mnt/home/bintarti/FastQC/fastqc raw_reads_R1.fastq raw_reads_R2.fastq -o stats && rm -rf raw_reads_R1.fastq raw_reads_R2.fastq
 ```
 
-##MERGE PAIRED READS
+## MERGE PAIRED READS
 
 ```
 mkdir mergedfastq
 
 /mnt/research/rdp/public/thirdParty/usearch10.0.240_i86linux64 -fastq_mergepairs ../rawreads/*R1*.fastq -reverse ../rawreads/*R2*.fastq -fastq_maxdiffs 10 -fastq_minmergelen 50 -relabel @ -fastqout mergedfastq/merged2.fastq
 ```
-###output
+### output
 ```
 6818052  Pairs (6.8M)
    4601240  Merged (4.6M, 67.49%)
@@ -62,13 +62,13 @@ mkdir mergedfastq
       0.85  Mean rev expected errors
       0.23  Mean merged expected errors
 ```
-##CHECK SEQUENCE QUALITY OF MERGED SEQS USING USEARCH AND VSEARCH
+## CHECK SEQUENCE QUALITY OF MERGED SEQS USING USEARCH AND VSEARCH
 ```
 /mnt/research/rdp/public/thirdParty/usearch10.0.240_i86linux64 -fastq_eestats2 mergedfastq/merged2.fastq -output stats_eestats2_USEARCH.txt
 
 /mnt/home/bintarti/vsearch-2.8.4-linux-x86_64/bin/vsearch -fastq_stats mergedfastq/merged2.fastq -log stats_results_VSEARCH.txt
 ```
-###output
+### output
 ```
 4601240 reads, max len 484, avg 281.0
 
@@ -128,9 +128,9 @@ Length         MaxEE 0.50         MaxEE 1.00         MaxEE 2.00
 #quality check
 /mnt/home/bintarti/FastQC/fastqc filtered_cut_merged.fastq
 ```
-##CLUSTERING AND DENOISING (OTUs vs. ESV)
+## CLUSTERING AND DENOISING (OTUs vs. ESV)
 
-###generating Exact Sequence Variants (ESV) also called 0-radius OTUs
+### generating Exact Sequence Variants (ESV) also called 0-radius OTUs
 ```
 1) DEREPLICATE
 
